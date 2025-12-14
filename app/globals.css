@@ -1,26 +1,174 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ *
+ * StreamTV design system — Tailwind v4 theme tokens.
+ * A cinematic, dark-first OTT palette (Netflix / ZEE5 / Hotstar grade).
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Surfaces — deep, slightly-blue blacks for a premium cinema feel.
+     NOTE: avoid color names that collide with Tailwind scale utilities
+     (e.g. `base`, `sm`, `lg`) — `canvas`/`night` keep `text-base` as a size. */
+  --color-canvas: #07090f;
+  --color-night: #0b0e16;
+  --color-surface: #111521;
+  --color-surface-2: #191f2e;
+  --color-surface-3: #232a3b;
+  --color-line: #2a3142;
+
+  /* Brand — electric violet → magenta gradient identity */
+  --color-brand: #7c5cff;
+  --color-brand-strong: #6a45ff;
+  --color-brand-soft: #a78bff;
+  --color-accent: #ff4d8d;
+
+  /* Text */
+  --color-ink: #f4f6fb;
+  --color-ink-muted: #aab2c5;
+  --color-ink-subtle: #6b7488;
+
+  /* Semantic */
+  --color-success: #36d399;
+  --color-warning: #fbbf24;
+  --color-danger: #ff5c5c;
+  --color-rating: #ffc83d;
+
+  /* Radii */
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+
+  /* Fonts (wired from next/font CSS variables in layout) */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Motion */
+  --ease-out-cine: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layout */
+  --header-height: 4.5rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Base layer
+ * ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ambient brand glow painted behind the app shell */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 15% -10%, color-mix(in oklab, var(--color-brand) 22%, transparent), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 0%, color-mix(in oklab, var(--color-accent) 14%, transparent), transparent 55%);
+}
+
+/* ------------------------------------------------------------------ *
+ * Utilities & component-ish helpers
+ * ------------------------------------------------------------------ */
+
+/* Hide native scrollbars on horizontal content rows */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mask edges of a scroll container so cards fade out at the rails */
+.edge-fade-x {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 2.5rem,
+    #000 calc(100% - 2.5rem),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 2.5rem,
+    #000 calc(100% - 2.5rem),
+    transparent
+  );
+}
+
+/* Spatial-navigation / keyboard focus ring — must read from 10 feet (TV) */
+.focus-ring {
+  outline: none;
+}
+.focus-ring[data-focused="true"],
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  transform: scale(1.05);
+  z-index: 20;
+}
+
+/* Player range inputs (scrubber + volume) */
+.player-range {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+}
+.player-range::-webkit-slider-runnable-track {
+  height: 0.3rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.player-range::-moz-range-track {
+  height: 0.3rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+.player-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  margin-top: -0.28rem;
+  height: 0.85rem;
+  width: 0.85rem;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand) 30%, transparent);
+}
+.player-range::-moz-range-thumb {
+  height: 0.85rem;
+  width: 0.85rem;
+  border: none;
+  border-radius: 9999px;
+  background: var(--color-brand);
+}
+
+/* When TV mode is active we hide the mouse cursor app-wide */
+.tv-mode,
+.tv-mode * {
+  cursor: none !important;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
