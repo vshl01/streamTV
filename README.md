@@ -282,7 +282,7 @@ Components compose strictly upward: **atoms → molecules → organisms → temp
 ### Organisms ([`components/organisms`](components/organisms))
 `AppChrome`, `ContentRow`, `ContinueWatchingRow`, `DetailPanel`, `Footer`, `Header`, `HeroBanner`, `SearchView`, `VideoPlayer`.
 - **`AppChrome`** (renders nothing) — boots spatial nav once, toggles the `tv-mode` body class, seeds initial TV focus, and maps Backspace → browser-back in TV mode.
-- **`HeroBanner`** — auto-rotating featured carousel (9s, pauses on hover/focus).
+- **`HeroBanner`** — auto-rotating featured carousel (~6s, pauses on hover/focus) with a true backdrop crossfade, a slow Ken Burns zoom, staggered fade/rise of the copy, and a fill-style progress indicator. CTAs stay mounted so spatial-nav focus is stable across slides.
 - **`ContentRow`** — horizontally-scrollable carousel that provides a spatial-nav row context.
 - **`ContinueWatchingRow`** — hydration-gated (`useHydrated`) so the persisted row never causes SSR mismatch.
 - **`SearchView`** — debounced (350ms) input → RTK Query GraphQL search, recent searches, skeleton states, spatial grid.

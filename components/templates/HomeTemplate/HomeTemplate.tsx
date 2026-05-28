@@ -16,7 +16,7 @@ export function HomeTemplate({ catalog }: HomeTemplateProps) {
     <div className="pb-10">
       <HeroBanner titles={catalog.featured} />
 
-      <div className="relative z-10 -mt-24 space-y-10 sm:space-y-12 lg:-mt-28">
+      <div className="relative z-10 -mt-12 space-y-10 sm:-mt-16 sm:space-y-12 lg:-mt-20">
         <ContinueWatchingRow bySlug={catalog.bySlug} />
         {catalog.categories.map((category, index) => (
           <ContentRow

@@ -160,6 +160,55 @@ body::before {
   cursor: none !important;
 }
 
+/* ------------------------------------------------------------------ *
+ * Hero banner motion
+ * ------------------------------------------------------------------ */
+
+/* Slow, continuous cinematic zoom on the active backdrop (Ken Burns) */
+@keyframes hero-kenburns {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1.16);
+  }
+}
+.hero-kenburns {
+  animation: hero-kenburns 14s var(--ease-out-cine) infinite alternate;
+  will-change: transform;
+}
+
+/* Staggered fade + rise for hero copy on each slide change */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-rise {
+  animation: hero-rise 0.6s var(--ease-out-cine) both;
+}
+
+/* Fill indicator that tracks the rotation timer (duration set inline) */
+@keyframes hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.hero-progress {
+  transform-origin: left center;
+  animation-name: hero-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
 /* Respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   html {

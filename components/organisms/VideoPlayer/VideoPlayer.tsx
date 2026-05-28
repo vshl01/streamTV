@@ -99,7 +99,10 @@ export function VideoPlayer({ title }: VideoPlayerProps) {
     if (!element) return;
 
     dispatch(loadTitle(title.slug));
-    const resumeAt = selectResumePosition(title.slug)(store.getState());
+    // "Play from start" links with ?restart=1 — honor it by skipping the resume
+    // seek. Reading location here is safe: effects only run on the client.
+    const restart = new URLSearchParams(window.location.search).get("restart") === "1";
+    const resumeAt = restart ? 0 : selectResumePosition(title.slug)(store.getState());
     const preferredQuality = store.getState().user.preferences.preferredQuality;
 
     import("@/lib/player/videojs").then(({ createPlayer }) => {
