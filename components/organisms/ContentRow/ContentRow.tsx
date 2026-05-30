@@ -49,7 +49,10 @@ export function ContentRow({
   return (
     <section aria-labelledby={`row-${slug}`} className="group/row relative">
       <div className="mb-3 flex items-baseline justify-between px-4 sm:px-8 lg:px-12">
-        <h2 id={`row-${slug}`} className="text-lg font-bold tracking-tight text-ink sm:text-xl">
+        <h2
+          id={`row-${slug}`}
+          className="text-lg font-bold tracking-tight text-ink sm:text-xl"
+        >
           {label}
         </h2>
         {browseSlug && (

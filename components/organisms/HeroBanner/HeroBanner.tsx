@@ -144,7 +144,7 @@ export function HeroBanner({ titles }: HeroBannerProps) {
 
       {/* Rotation indicators — active segment fills over the rotation timer */}
       {count > 1 && (
-        <div className="absolute bottom-6 right-4 hidden items-center gap-2 sm:right-8 sm:flex lg:right-12">
+        <div className="absolute bottom-10 right-4 hidden items-center gap-2 sm:right-8 sm:flex lg:right-12">
           {titles.map((title, i) => (
             <button
               key={title.slug}
